@@ -8,6 +8,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public float jumpForce = 3; //This is set in the inspector
     public float reboundPower = 10; //This is set in the inspector
     public float attackColdown = 0.5f; //This is set in the inspector
+    public float coyoteTime = 0.2f; //This is set in the inspector
+    private float coyoteTimer;
 
     private BoxCollider2D boxColider; 
     private Rigidbody2D rigidbody;
@@ -90,17 +92,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         if (other.CompareTag("Point"))
         {
-            
-            Destroy(other.gameObject);
-
-
-
             if (DownAttackColider.enabled)
             {
                 ApplyReboundEffect();
             }
-
-
         }
     }
 
@@ -163,12 +158,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
         return raycastHit.collider != null;
     }
 
-    void jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() || Input.GetKeyDown(KeyCode.X) && isGrounded())
-        {
-            rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);       
+    void jump() { 
+
+        if (isGrounded()){
+            coyoteTimer = coyoteTime;
         }
+        else
+        {
+            coyoteTimer -= Time.deltaTime;
+        }
+            bool canjump = coyoteTimer > 0;
+
+        if (Input.GetKeyDown(KeyCode.Space) && canjump || Input.GetKeyDown(KeyCode.X) && canjump)
+        {
+            rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                coyoteTimer = 0f;
+        }
+
     }
 
     void movement()
