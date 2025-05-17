@@ -11,6 +11,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public float coyoteTime = 0.2f; //This is set in the inspector
     private float coyoteTimer;
 
+    public AudioClip sonidoSalto;
+
+
     private BoxCollider2D boxColider; 
     private Rigidbody2D rigidbody;
     private Animator animator;
@@ -171,6 +174,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && canjump || Input.GetKeyDown(KeyCode.X) && canjump)
         {
+
+            AudioManagger.Instance.reproducirSonido(sonidoSalto);
+
             rigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 coyoteTimer = 0f;
         }
