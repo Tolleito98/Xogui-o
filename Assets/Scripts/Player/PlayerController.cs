@@ -1,14 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float speed = 3; //This is set is the inspector
     public float jumpForce = 3; //This is set in the inspector
     public float reboundPower = 10; //This is set in the inspector
     public float attackColdown = 0.5f; //This is set in the inspector
     public float coyoteTime = 0.2f; //This is set in the inspector
+
+    public float fuerzaGolpe = 0;
+
     private float coyoteTimer;
 
     public AudioClip sonidoSalto;
@@ -27,6 +31,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     public LayerMask pointLayer;
 
     private bool lookingRight = true;
+    private bool canMove = true;
     private float lastAttackTime = 0f;
 
 
@@ -187,6 +192,8 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         float inputMove = Input.GetAxis("Horizontal");
 
+        if (!canMove) return;   
+
         if (inputMove != 0f)
         {
             animator.SetBool("isRunning", true);
@@ -199,6 +206,32 @@ public class NewMonoBehaviourScript : MonoBehaviour
             rigidbody.linearVelocity = new Vector2(inputMove * speed, rigidbody.linearVelocity.y);
         
         flipCharacter(inputMove);
+    }
+
+    public void recibirGolpe(Vector2 sourcePosition) 
+    {
+        Vector2 direccion = ((Vector2)transform.position - sourcePosition);
+        float horizontal = direccion.x >= 0 ? 1 : -1;
+        direccion = new Vector2(horizontal, 1).normalized;
+
+        canMove = false;
+
+        rigidbody.linearVelocity = Vector2.zero;
+        rigidbody.AddForce(direccion * fuerzaGolpe, ForceMode2D.Impulse);
+
+        StartCoroutine(waitToMove());
+    }
+
+    IEnumerator waitToMove()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        while (!isGrounded())
+        {
+            yield return null;
+        }
+
+        canMove = true;
     }
 
 

@@ -4,6 +4,10 @@ public class GameManagger : MonoBehaviour
 {
     public static GameManagger Instance {get; private set;}
 
+    public HUD hud;
+
+    private int vidas = 3;
+
     public int PuntosTotales { get { return puntosTotales; } }
     private int puntosTotales;
 
@@ -18,9 +22,22 @@ public class GameManagger : MonoBehaviour
         }
     }
 
+    public void perderVida()
+    {
+        vidas -= 1;
+        hud.desactivarVida(vidas);
+    }
+
+    public void recuperarVida()
+    {
+        hud.activarVidas(vidas);
+        vidas += 1;
+        
+    }
+
     public void sumarPutos(int puntosObtenidos) 
     {
         puntosTotales +=  puntosObtenidos;
-        Debug.Log(puntosTotales);
+        hud.actualizarPuntos(puntosTotales);
     }
 }
