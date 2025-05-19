@@ -51,13 +51,24 @@ public class Enemmy : MonoBehaviour
        
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MainCharacter"))
+        {
+  
+            GameManagger.Instance.perderVida();
+            collision.gameObject.GetComponent<PlayerController>().recibirGolpe(transform.position);
+        }
+    }
+
+
     private void EstadoEsperando()
     {
         Collider2D jugadorCollider = Physics2D.OverlapCircle(transform.position, radioBusqueda, capaPlayer);
 
         if (jugadorCollider)
         {
-            // Verificamos si está dentro del área permitida
+            
             if (Vector2.Distance(posicionInicial, jugadorCollider.transform.position) <= distanciaMaxima)
             {
                 transformPlayer = jugadorCollider.transform;
@@ -103,7 +114,7 @@ public class Enemmy : MonoBehaviour
 
         animator.SetBool("isChasing", false);
 
-        // Revisar si el jugador volvió a entrar en rango
+        
         Collider2D jugadorCollider = Physics2D.OverlapCircle(transform.position, radioBusqueda, capaPlayer);
 
         if (jugadorCollider)
