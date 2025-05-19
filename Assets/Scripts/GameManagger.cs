@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagger : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class GameManagger : MonoBehaviour
     {
         vidas -= 1;
         hud.desactivarVida(vidas);
+        if (vidas <= 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 
     public void recuperarVida()

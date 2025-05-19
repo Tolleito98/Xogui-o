@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,7 +11,13 @@ public class Enemmy : MonoBehaviour
 
     public EstadosMovimiento estadoActual;
 
+    public float vidaEnemigo = 2;
+    public float fuerzaGolpe = 5;
     public float velocidadMovimiento;
+    public float stunTime = 1f;
+    private float stunTimer = 0f;
+    private bool estaEnPausa;
+
     public float distanciaMaxima;
     public Vector3 posicionInicial;
 
@@ -35,6 +43,20 @@ public class Enemmy : MonoBehaviour
 
     private void Update()
     {
+
+        if (estaEnPausa)
+        {
+            stunTimer -= Time.deltaTime;
+
+            Debug.Log(stunTimer);
+
+            if (stunTimer <= 0f)
+            {
+
+                estaEnPausa = false;
+            }
+        }
+
         switch (estadoActual)
         {
             case EstadosMovimiento.Esperando:
@@ -46,9 +68,10 @@ public class Enemmy : MonoBehaviour
             case EstadosMovimiento.Volviendo:
                 EstadoVolviendo();
                 break;
+
         }
 
-       
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -58,12 +81,53 @@ public class Enemmy : MonoBehaviour
   
             GameManagger.Instance.perderVida();
             collision.gameObject.GetComponent<PlayerController>().recibirGolpe(transform.position);
+            
         }
+
+       
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerController player = collision.gameObject.transform.parent.GetComponent<PlayerController>();
+
+        if (collision.gameObject.CompareTag("Ataque"))
+        {
+            Debug.Log("Si joder si");
+            recibirGolpe(collision.transform.position);
+            vidaEnemigo--;
+
+
+            if (vidaEnemigo <= 0)
+            {
+                Morir();
+            }
+
+        }
+    }
+
+    private void Morir()
+    {
+        animator.SetTrigger("morreu");
+        estaEnPausa = true; 
+        rigidbody.linearVelocity = Vector2.zero;
+        StartCoroutine(EsperarAnimacionMuerte());
+    }
+
+    private IEnumerator EsperarAnimacionMuerte()
+    {
+        
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        Destroy(this.gameObject);
     }
 
 
     private void EstadoEsperando()
     {
+        if (estaEnPausa) return;
+
+
         Collider2D jugadorCollider = Physics2D.OverlapCircle(transform.position, radioBusqueda, capaPlayer);
 
         if (jugadorCollider)
@@ -86,7 +150,10 @@ public class Enemmy : MonoBehaviour
     public void EstadoSiguiendo()
     {
 
+        if (estaEnPausa) return;
         animator.SetBool("isChasing", true);
+
+        
 
         if (transformPlayer == null)
         {
@@ -111,6 +178,8 @@ public class Enemmy : MonoBehaviour
 
     private void EstadoVolviendo()
     {
+        if (estaEnPausa) return;
+
 
         animator.SetBool("isChasing", false);
 
@@ -142,8 +211,22 @@ public class Enemmy : MonoBehaviour
         mirarObjetivo(posicionInicial);
     }
 
+    public void recibirGolpe(Vector2 sourcePosition)
+    {
+        
+        Vector2 direccion = ((Vector2)transform.position - sourcePosition).normalized;
+
+        rigidbody.linearVelocity = Vector2.zero;  
+        rigidbody.AddForce(direccion * fuerzaGolpe, ForceMode2D.Impulse);  
+
+        estaEnPausa = true;
+        stunTimer = stunTime;
+    }
+
     private void mirarObjetivo(Vector3 objetivo)
     {
+        if (estaEnPausa) return;
+
         if (objetivo.x > transform.position.x && !mirandoDerecha)
         {
             Girar();
