@@ -50,9 +50,4 @@ public class GameManagger : MonoBehaviour
         llaveConseguida = false;
     }
 
-    public void sumarPutos(int puntosObtenidos) 
-    {
-        puntosTotales +=  puntosObtenidos;
-        hud.actualizarPuntos(puntosTotales);
-    }
 }

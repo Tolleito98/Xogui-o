@@ -11,14 +11,11 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        puntos.text = GameManagger.Instance.PuntosTotales.ToString();
+        
         if (GameManagger.Instance.llaveConseguida) iconoLlave.SetActive(true);
     }
 
-    public void actualizarPuntos(int puntosTotales) 
-    {
-        puntos.text = puntosTotales.ToString();
-    }
+
 
     public void desactivarVida(int indiceVida)
     {

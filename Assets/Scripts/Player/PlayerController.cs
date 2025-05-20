@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+   
         movement();
         jump();
         getStatus();

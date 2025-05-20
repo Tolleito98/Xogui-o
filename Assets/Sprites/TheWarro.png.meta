@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TheWarro_0: -5307598005847215437
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
