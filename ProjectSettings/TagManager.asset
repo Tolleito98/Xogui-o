@@ -8,11 +8,14 @@ TagManager:
   - muerte
   - Ataque
   - MainCharacter
+  - Pinchos
+  - Enemy
+  - Key
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - background
   - Water
   - UI
   - 
@@ -42,6 +45,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 566073647
+    locked: 0
+  - name: tips
+    uniqueID: 273885669
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

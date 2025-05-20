@@ -8,6 +8,7 @@ public class GameManagger : MonoBehaviour
     public HUD hud;
 
     private int vidas = 3;
+    public bool llaveConseguida = false;
 
     public int PuntosTotales { get { return puntosTotales; } }
     private int puntosTotales;
@@ -37,6 +38,16 @@ public class GameManagger : MonoBehaviour
         hud.activarVidas(vidas);
         vidas += 1;
         
+    }
+
+    public void ConseguirLLave()
+    {
+        llaveConseguida = true;
+    }
+
+    public void QuitarLlave()
+    {
+        llaveConseguida = false;
     }
 
     public void sumarPutos(int puntosObtenidos) 

@@ -9,6 +9,8 @@ public class Enemmy : MonoBehaviour
     public LayerMask capaPlayer;
     public Transform transformPlayer;
 
+    public AudioClip morreuSonido;
+
     public EstadosMovimiento estadoActual;
 
     public float vidaEnemigo = 2;
@@ -23,7 +25,9 @@ public class Enemmy : MonoBehaviour
 
     public bool mirandoDerecha;
 
-    public Rigidbody2D rigidbody;
+    private Rigidbody2D rigidbody;
+    private BoxCollider2D col;
+
     public Animator animator;
 
     public enum EstadosMovimiento 
@@ -38,6 +42,8 @@ public class Enemmy : MonoBehaviour
     {
         posicionInicial = transform.position;
         animator = GetComponent<Animator>();
+        rigidbody = GetComponent<Rigidbody2D>();
+        col = GetComponent<BoxCollider2D>();
     }
 
 
@@ -100,6 +106,7 @@ public class Enemmy : MonoBehaviour
 
             if (vidaEnemigo <= 0)
             {
+                AudioManagger.Instance.reproducirSonido(morreuSonido);
                 Morir();
             }
 
@@ -108,6 +115,8 @@ public class Enemmy : MonoBehaviour
 
     private void Morir()
     {
+        col.enabled = false;
+        rigidbody.gravityScale = 0;
         animator.SetTrigger("morreu");
         estaEnPausa = true; 
         rigidbody.linearVelocity = Vector2.zero;

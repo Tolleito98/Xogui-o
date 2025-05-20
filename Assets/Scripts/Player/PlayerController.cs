@@ -5,26 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 3; //This is set is the inspector
-    public float jumpForce = 3; //This is set in the inspector
-    public float reboundPower = 10; //This is set in the inspector
-    public float attackColdown = 0.5f; //This is set in the inspector
-    public float coyoteTime = 0.2f; //This is set in the inspector
+    public float speed = 3; 
+    public float jumpForce = 3; 
+    public float reboundPower = 10; 
+    public float attackColdown = 0.5f; 
+    public float coyoteTime = 0.2f; 
 
     public float fuerzaGolpe = 0;
 
     private float coyoteTimer;
 
     public AudioClip sonidoSalto;
-
+    public AudioClip sonidoCorte;
+    public AudioClip recibirDano;
 
     private BoxCollider2D boxColider; 
     private Rigidbody2D rigidbody;
     private Animator animator;
 
-    public Collider2D groundAttackColider; //This is set in the inspector
-    public Collider2D UpAtackColider; //This is set in the inspector
-    public Collider2D DownAttackColider; //This is set in the inspector
+    public Collider2D groundAttackColider; 
+    public Collider2D UpAtackColider; 
+    public Collider2D DownAttackColider; 
     
 
     public LayerMask floorLayer;
@@ -62,8 +63,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.time >= lastAttackTime + attackColdown)
         {
+            
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                AudioManagger.Instance.reproducirSonido(sonidoCorte);
 
                 if (Input.GetKey(KeyCode.DownArrow))
                 {
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (other.CompareTag("Point"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Pinchos"))
         {
             if (DownAttackColider.enabled)
             {
@@ -210,6 +213,7 @@ public class PlayerController : MonoBehaviour
 
     public void recibirGolpe(Vector2 sourcePosition) 
     {
+        AudioManagger.Instance.reproducirSonido(recibirDano);
         Vector2 direccion = ((Vector2)transform.position - sourcePosition);
         float horizontal = direccion.x >= 0 ? 1 : -1;
         direccion = new Vector2(horizontal, 1).normalized;
