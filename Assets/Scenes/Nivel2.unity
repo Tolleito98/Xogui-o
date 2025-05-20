@@ -197,11 +197,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &298768427 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9209736901056003120, guid: 3bff6e1451f811a4d9d9f5a39a871f75, type: 3}
-  m_PrefabInstance: {fileID: 7058117827547778188}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &303580655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1087,10 @@ PrefabInstance:
     - target: {fileID: 1649387626804234881, guid: d4eeb552821b5f8429107bf13cc90f9c, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780656060394616033, guid: d4eeb552821b5f8429107bf13cc90f9c, type: 3}
+      propertyPath: nombreSiguienteNivel
+      value: Nivel3
       objectReference: {fileID: 0}
     - target: {fileID: 5013841300878304742, guid: d4eeb552821b5f8429107bf13cc90f9c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66423,7 +66422,7 @@ PrefabInstance:
     - target: {fileID: 1425703649854056991, guid: 383d52399afc4f6488a6fbcbb69dd339, type: 3}
       propertyPath: menuPause
       value: 
-      objectReference: {fileID: 298768427}
+      objectReference: {fileID: 0}
     - target: {fileID: 8212544264334204112, guid: 383d52399afc4f6488a6fbcbb69dd339, type: 3}
       propertyPath: m_Name
       value: SystemPause
