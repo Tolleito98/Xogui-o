@@ -9,7 +9,7 @@ public class Pinchos : MonoBehaviour
         {
 
             GameManagger.Instance.perderVida();
-            collision.gameObject.GetComponent<PlayerController>().recibirGolpe(transform.position);
+            collision.gameObject.GetComponent<PlayerController>().recibirGolpePinchos(transform.position);
 
         }
 

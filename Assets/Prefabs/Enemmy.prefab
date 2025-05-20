@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8736046655595520046}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.45, y: -2.44, z: 0}
+  m_LocalPosition: {x: 1.3, y: -2.81, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9fdafeb2cdd4f942b715ddb1ba43f8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radioBusqueda: 2.93
+  radioBusqueda: 1.24
   capaPlayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -160,7 +160,7 @@ MonoBehaviour:
   fuerzaGolpe: 1000
   velocidadMovimiento: 0.94
   stunTime: 0.2
-  distanciaMaxima: 5
+  distanciaMaxima: 3.66
   posicionInicial: {x: 0, y: 0, z: 0}
   mirandoDerecha: 1
   animator: {fileID: 6042425061393384083}

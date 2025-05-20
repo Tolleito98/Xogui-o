@@ -139,6 +139,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+   
+
     IEnumerator ActivateDownAttackCollider()
     {
         DownAttackColider.enabled = true; 
@@ -224,6 +226,21 @@ public class PlayerController : MonoBehaviour
         rigidbody.AddForce(direccion * fuerzaGolpe, ForceMode2D.Impulse);
 
         StartCoroutine(waitToMove());
+    }
+
+    public void recibirGolpePinchos(Vector2 sourcePosition)
+    {
+        AudioManagger.Instance.reproducirSonido(recibirDano);
+        Vector2 direccion = ((Vector2)transform.position - sourcePosition);
+        float horizontal = direccion.x >= 0 ? 1 : -1;
+        direccion = new Vector2(horizontal, 1).normalized;
+
+       
+
+        rigidbody.linearVelocity = Vector2.zero;
+        rigidbody.AddForce(direccion * fuerzaGolpe, ForceMode2D.Impulse);
+
+        
     }
 
     IEnumerator waitToMove()
